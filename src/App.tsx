@@ -22,14 +22,14 @@ export default function App() {
   });
 
   return (
-    <div className="h-screen w-full bg-gray-100 flex flex-col items-center">
+    <div className="min-h-screen w-full bg-gray-100 flex flex-col items-center">
       <h1 className="text-3xl font-bold mt-4 text-black">
         Minimalist Resume Builder
       </h1>
 
-      <div className="flex-1 w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+      <div className="flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
         <ResumeForm setResumeData={setResumeData} />
-        <div ref={resumeRef}>
+        <div ref={resumeRef} className="w-full h-full">
           <ResumePreview resumeData={resumeData} />
         </div>
       </div>
