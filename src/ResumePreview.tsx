@@ -1,13 +1,5 @@
 import "./App.css";
-
-interface ResumeData {
-  name?: string;
-  email?: string;
-  phone?: string;
-  education?: string;
-  experience?: string;
-  skills?: string;
-}
+import { ResumeData } from "./types/resume";
 
 export default function ResumePreview({
   resumeData,
@@ -17,6 +9,17 @@ export default function ResumePreview({
   return (
     <div className="h-full w-full p-6 bg-white rounded-lg shadow-md flex flex-col overflow-y-auto">
       <h2 className="text-xl font-bold mb-4">Resume Preview</h2>
+
+      {/* Profile Picture */}
+      {resumeData.profilePicture && (
+        <div className="mb-4">
+          <img
+            src={resumeData.profilePicture}
+            alt="Profile"
+            className="w-32 h-32 rounded-full object-cover"
+          />
+        </div>
+      )}
 
       {/* Name Section */}
       <p className="text-lg font-semibold text-black break-words">

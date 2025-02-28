@@ -12,3 +12,19 @@ export interface ValidationErrors {
   email?: string;
   phone?: string;
 }
+
+import { ResumeData } from '../types/resume';
+
+export const validateForm = (data: ResumeData): ValidationErrors => {
+  const errors: ValidationErrors = {};
+
+  if (data.email && !validateEmail(data.email)) {
+    errors.email = 'Please enter a valid email address';
+  }
+
+  if (data.phone && !validatePhone(data.phone)) {
+    errors.phone = 'Please enter a valid 10 digits phone number';
+  }
+
+  return errors;
+};

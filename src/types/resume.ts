@@ -18,7 +18,8 @@ export interface ResumeData {
   name: string;
   email: string;
   phone: string;
-  education: Education[];
-  experience: Experience[];
-  skills: string[];
+  education: string;
+  experience: string;
+  skills: string;
+  profilePicture?: string;
 }
