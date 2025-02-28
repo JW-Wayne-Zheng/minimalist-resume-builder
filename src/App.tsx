@@ -85,54 +85,80 @@ export default function App() {
     }
   ]);
 
-  // Add shortcut info to the UI
   return (
-    <div className="min-h-screen w-full bg-gray-100 flex flex-col items-center">
-      <h1 className="text-3xl font-bold mt-4 text-black">
-        Minimalist Resume Builder
-      </h1>
-      <div className="text-sm text-gray-500 mt-2">
-        {saveStatusDisplay[saveStatus]}
-      </div>
+    <div className="min-h-screen w-full bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
+      <div className="w-full max-w-[1920px] mx-auto px-4 py-4 flex flex-col min-h-screen">
+        <h1 className="text-3xl font-bold text-gray-800 text-center mb-1">
+          Minimalist Resume Builder
+        </h1>
+        <div className="text-sm text-gray-500 text-center mb-4 flex items-center justify-center gap-2">
+          <span className={`inline-flex items-center gap-1 ${
+            saveStatus === 'saved' ? 'text-green-600' :
+            saveStatus === 'saving' ? 'text-blue-600' : 'text-red-600'
+          }`}>
+            <div className="w-2 h-2 rounded-full bg-current"></div>
+            {saveStatusDisplay[saveStatus]}
+          </span>
+        </div>
 
-      {resumeScore && (
-        <div className="w-full max-w-4xl px-6 mt-4">
-          <div className="bg-white rounded-lg p-4 shadow-md">
-            <h3 className="text-lg font-semibold">Resume Score: {Math.round(resumeScore.total)}%</h3>
-            <div className="mt-2">
-              {resumeScore.suggestions.map((suggestion, index) => (
-                <p key={index} className="text-sm text-gray-600">• {suggestion}</p>
-              ))}
+        {resumeScore && (
+          <div className="mb-4">
+            <div className="bg-white rounded-lg p-4 shadow-lg border border-gray-100">
+              <div className="flex items-center gap-4">
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-800">Resume Score</h3>
+                  <div className="text-sm text-gray-500">Based on content completeness</div>
+                </div>
+                <div className="text-2xl font-bold text-blue-600">
+                  {Math.round(resumeScore.total)}%
+                </div>
+              </div>
+              <div className="mt-2 space-y-1">
+                {resumeScore.suggestions.map((suggestion, index) => (
+                  <p key={index} className="text-sm text-gray-600 flex items-start gap-2">
+                    <span className="text-blue-500">•</span>
+                    {suggestion}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <div className="flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-        <ResumeForm setResumeData={setResumeData} resumeData={resumeData} />
-        <div ref={resumeRef} className="w-full h-full">
-          <ResumePreview resumeData={resumeData} />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 mb-4">
+          <div className="min-h-[600px]">
+            <ResumeForm setResumeData={setResumeData} resumeData={resumeData} />
+          </div>
+          <div ref={resumeRef} className="min-h-[600px]">
+            <ResumePreview resumeData={resumeData} />
+          </div>
         </div>
-      </div>
-      <div className="flex gap-2 mb-4">
-        <button
-          onClick={() => handleDownloadPDF()}
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition"
-        >
-          Download as PDF
-        </button>
-        <button
-          onClick={() => handleExport('json')}
-          className="bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition"
-        >
-          Export JSON
-        </button>
-        <button
-          onClick={() => handleExport('txt')}
-          className="bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700 transition"
-        >
-          Export TXT
-        </button>
+
+        <div className="flex flex-wrap justify-center gap-3 py-2">
+          <button
+            onClick={() => handleDownloadPDF()}
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700 
+              transition-all duration-200 ease-in-out transform hover:scale-105 flex items-center gap-2"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Download PDF
+          </button>
+          <button
+            onClick={() => handleExport('json')}
+            className="bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition"
+          >
+            Export JSON
+          </button>
+          <button
+            onClick={() => handleExport('txt')}
+            className="bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700 transition"
+          >
+            Export TXT
+          </button>
+        </div>
       </div>
     </div>
   );
