@@ -11,6 +11,7 @@
     "start": "serve dist -p $PORT"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.3.0",
     "@tailwindcss/vite": "^4.0.4",
     "@tiptap/react": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",
@@ -18,7 +19,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-image-crop": "^11.0.7",
-    "react-to-print": "^3.0.5",
     "serve": "^14.2.4",
     "tailwindcss": "^4.0.4"
   },
