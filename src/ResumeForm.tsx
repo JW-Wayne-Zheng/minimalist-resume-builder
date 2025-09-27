@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useState } from "react";
-
 import { validateForm, ValidationErrors } from './utils/validation';
 import { ResumeData } from './types/resume';
 import ProfilePicture from './components/ProfilePicture';
@@ -41,8 +40,8 @@ export default function ResumeForm({ setResumeData, resumeData }: {
           <ProfilePicture onImageChange={handleProfilePicture} />
           
           <div className="space-y-4 mt-4">
-            {/* Form fields with enhanced styling */}
-            <div className="space-y-4">
+            {/* Name Field */}
+            <div className="space-y-2">
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                 Name
               </label>
@@ -59,7 +58,7 @@ export default function ResumeForm({ setResumeData, resumeData }: {
             </div>
 
             {/* Email Field */}
-            <div className="flex flex-col flex-1">
+            <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium text-gray-700">
                 Email
               </label>
@@ -68,13 +67,15 @@ export default function ResumeForm({ setResumeData, resumeData }: {
                 name="email"
                 id="email"
                 value={resumeData.email}
-                className="w-full h-full p-3 border rounded text-black flex-grow"
+                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 
+                  focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                 onChange={handleChange}
+                placeholder="your.email@example.com"
               />
             </div>
 
             {/* Phone Field */}
-            <div className="flex flex-col flex-1">
+            <div className="space-y-2">
               <label htmlFor="phone" className="text-sm font-medium text-gray-700">
                 Phone
               </label>
@@ -83,13 +84,15 @@ export default function ResumeForm({ setResumeData, resumeData }: {
                 name="phone"
                 id="phone"
                 value={resumeData.phone}
-                className="w-full h-full p-3 border rounded text-black flex-grow"
+                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 
+                  focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                 onChange={handleChange}
+                placeholder="+1 (555) 123-4567"
               />
             </div>
 
             {/* Education Field */}
-            <div className="flex flex-col flex-1">
+            <div className="space-y-2">
               <label htmlFor="education" className="text-sm font-medium text-gray-700">
                 Education
               </label>
@@ -97,13 +100,15 @@ export default function ResumeForm({ setResumeData, resumeData }: {
                 name="education"
                 id="education"
                 value={resumeData.education}
-                className="w-full p-3 border rounded text-black resize-y min-h-[100px]"
+                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 
+                  focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-y min-h-[100px]"
                 onChange={handleChange}
+                placeholder="University Name, Degree, Year&#10;Relevant coursework, achievements..."
               />
             </div>
 
             {/* Experience Field */}
-            <div className="flex flex-col flex-1">
+            <div className="space-y-2">
               <label htmlFor="experience" className="text-sm font-medium text-gray-700">
                 Work Experience
               </label>
@@ -111,13 +116,15 @@ export default function ResumeForm({ setResumeData, resumeData }: {
                 name="experience"
                 id="experience"
                 value={resumeData.experience}
-                className="w-full p-3 border rounded text-black resize-y min-h-[150px]"
+                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 
+                  focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-y min-h-[150px]"
                 onChange={handleChange}
+                placeholder="Job Title, Company Name, Dates&#10;• Key achievement or responsibility&#10;• Another key achievement..."
               />
             </div>
 
             {/* Skills Field */}
-            <div className="flex flex-col flex-1">
+            <div className="space-y-2">
               <label htmlFor="skills" className="text-sm font-medium text-gray-700">
                 Skills
               </label>
@@ -125,17 +132,19 @@ export default function ResumeForm({ setResumeData, resumeData }: {
                 name="skills"
                 id="skills"
                 value={resumeData.skills}
-                className="w-full p-3 border rounded text-black resize-y min-h-[100px]"
+                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 
+                  focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-y min-h-[100px]"
                 onChange={handleChange}
+                placeholder="• Technical Skill 1&#10;• Technical Skill 2&#10;• Soft Skill 1&#10;• Language Skill..."
               />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Move error messages inside the main container */}
+      {/* Error messages */}
       {(errors.email || errors.phone) && (
-        <div className="bg-red-50 border-l-4 border-red-500 p-3 rounded-lg sticky bottom-0">
+        <div className="bg-red-50 border-l-4 border-red-500 p-3 rounded-lg">
           {errors.email && (
             <p className="text-red-700 text-sm">{errors.email}</p>
           )}
