@@ -33,6 +33,37 @@ const templates: Template[] = [
   }
 ];
 
+// Template preview components
+const MinimalPreview = () => (
+  <div className="w-full h-full bg-white flex items-center justify-center">
+    <img 
+      src="/temple_images/minimal_template_image.png" 
+      alt="Minimal Template Preview"
+      className="w-full h-full object-contain"
+    />
+  </div>
+);
+
+const ProfessionalPreview = () => (
+  <div className="w-full h-full bg-white flex items-center justify-center">
+    <img 
+      src="/temple_images/professional_template_image.png" 
+      alt="Professional Template Preview"
+      className="w-full h-full object-contain"
+    />
+  </div>
+);
+
+const CreativePreview = () => (
+  <div className="w-full h-full bg-white flex items-center justify-center">
+    <img 
+      src="/temple_images/creative_template_image.png" 
+      alt="Creative Template Preview"
+      className="w-full h-full object-contain"
+    />
+  </div>
+);
+
 export default function TemplateSelection() {
   const [selectedTemplate, setSelectedTemplate] = useState<string>('');
   const navigate = useNavigate();
@@ -41,10 +72,48 @@ export default function TemplateSelection() {
     setSelectedTemplate(templateId);
   };
 
+  const renderPreview = (templateId: string) => {
+    switch (templateId) {
+      case 'minimal':
+        return <MinimalPreview />;
+      case 'professional':
+        return <ProfessionalPreview />;
+      case 'creative':
+        return <CreativePreview />;
+      default:
+        return <MinimalPreview />;
+    }
+  };
+
   const handleContinue = () => {
     if (selectedTemplate) {
       localStorage.setItem('selectedTemplate', selectedTemplate);
       navigate('/editor');
+    }
+  };
+
+  const getTemplateIcon = (templateId: string) => {
+    switch (templateId) {
+      case 'minimal':
+        return (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        );
+      case 'professional':
+        return (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6" />
+          </svg>
+        );
+      case 'creative':
+        return (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+          </svg>
+        );
+      default:
+        return null;
     }
   };
 
@@ -79,26 +148,24 @@ export default function TemplateSelection() {
                 }`}
               >
                 {/* Template Preview */}
-                <div className="aspect-[3/4] bg-white rounded-t-xl p-6 flex flex-col">
-                  <div className="flex-1 bg-gray-50 rounded-lg p-4 flex flex-col justify-center items-center">
-                    <div className="w-16 h-16 bg-gray-300 rounded-full mb-4"></div>
-                    <div className="w-full space-y-2">
-                      <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-                      <div className="h-3 bg-gray-200 rounded w-1/2"></div>
-                      <div className="h-3 bg-gray-200 rounded w-2/3"></div>
-                    </div>
-                    <div className="w-full mt-6 space-y-2">
-                      <div className="h-3 bg-gray-200 rounded w-full"></div>
-                      <div className="h-3 bg-gray-200 rounded w-5/6"></div>
-                    </div>
-                  </div>
+                <div className="aspect-[3/4] bg-white rounded-t-xl overflow-hidden">
+                  {renderPreview(template.id)}
                 </div>
 
                 {/* Template Info */}
                 <div className="p-6 bg-white rounded-b-xl">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {template.name}
-                  </h3>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className={`p-2 rounded-lg ${
+                      template.id === 'minimal' ? 'bg-gray-100 text-gray-600' :
+                      template.id === 'professional' ? 'bg-blue-100 text-blue-600' :
+                      'bg-purple-100 text-purple-600'
+                    }`}>
+                      {getTemplateIcon(template.id)}
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900">
+                      {template.name}
+                    </h3>
+                  </div>
                   <p className="text-gray-600 mb-4">
                     {template.description}
                   </p>

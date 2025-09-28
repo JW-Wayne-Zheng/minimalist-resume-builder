@@ -4,9 +4,10 @@ import { ResumeData } from "./types/resume";
 interface ResumePreviewProps {
   resumeData: ResumeData;
   selectedTemplate?: string;
+  htmlContent?: string;
 }
 
-export default function ResumePreview({ resumeData, selectedTemplate = 'minimal' }: ResumePreviewProps) {
+export default function ResumePreview({ resumeData, selectedTemplate = 'minimal', htmlContent }: ResumePreviewProps) {
   const getTemplateStyles = () => {
     switch (selectedTemplate) {
       case 'professional':
@@ -48,25 +49,73 @@ export default function ResumePreview({ resumeData, selectedTemplate = 'minimal'
     <div className="bg-white rounded-lg shadow-lg border border-gray-100 p-6 h-full">
       <h2 className="text-xl font-bold text-gray-800 mb-4">Resume Preview</h2>
 
-      <div className={styles.container}>
-        {/* Header section */}
-        <div className={styles.header}>
-          {selectedTemplate === 'professional' ? (
-            // Professional template: side-by-side layout
-            <div className="flex justify-between items-start">
-              <div>
+      {htmlContent ? (
+        // WYSIWYG HTML content
+        <div className={`${styles.container} prose prose-sm max-w-none`}>
+          <div 
+            dangerouslySetInnerHTML={{ __html: htmlContent }}
+            className="resume-content"
+          />
+        </div>
+      ) : (
+        // Original template-based layout
+        <div className={styles.container}>
+          {/* Header section */}
+          <div className={styles.header}>
+            {selectedTemplate === 'professional' ? (
+              // Professional template: side-by-side layout
+              <div className="flex justify-between items-start">
+                <div>
+                  <h1 className={styles.name}>
+                    {resumeData.name || "Your Name"}
+                  </h1>
+                  <div className={styles.contact}>
+                    <p className="flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      {resumeData.email || "Your Email"}
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                      {resumeData.phone || "Your Phone"}
+                    </p>
+                  </div>
+                </div>
+                {resumeData.profilePicture && (
+                  <img
+                    src={resumeData.profilePicture}
+                    alt="Profile"
+                    className="w-24 h-24 rounded-full object-cover border-2 border-gray-300"
+                  />
+                )}
+              </div>
+            ) : selectedTemplate === 'creative' ? (
+              // Creative template: centered with gradient background
+              <div className="text-center">
+                {resumeData.profilePicture && (
+                  <img
+                    src={resumeData.profilePicture}
+                    alt="Profile"
+                    className="w-24 h-24 rounded-full object-cover border-4 border-white mx-auto mb-4 shadow-lg"
+                  />
+                )}
                 <h1 className={styles.name}>
                   {resumeData.name || "Your Name"}
                 </h1>
                 <div className={styles.contact}>
-                  <p className="flex items-center gap-2">
+                  <p className="flex items-center justify-center gap-2">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                     {resumeData.email || "Your Email"}
                   </p>
-                  <p className="flex items-center gap-2">
+                  <p className="flex items-center justify-center gap-2">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                         d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -75,84 +124,47 @@ export default function ResumePreview({ resumeData, selectedTemplate = 'minimal'
                   </p>
                 </div>
               </div>
-              {resumeData.profilePicture && (
-                <img
-                  src={resumeData.profilePicture}
-                  alt="Profile"
-                  className="w-24 h-24 rounded-full object-cover border-2 border-gray-300"
-                />
-              )}
-            </div>
-          ) : selectedTemplate === 'creative' ? (
-            // Creative template: centered with gradient background
-            <div className="text-center">
-              {resumeData.profilePicture && (
-                <img
-                  src={resumeData.profilePicture}
-                  alt="Profile"
-                  className="w-24 h-24 rounded-full object-cover border-4 border-white mx-auto mb-4 shadow-lg"
-                />
-              )}
-              <h1 className={styles.name}>
-                {resumeData.name || "Your Name"}
-              </h1>
-              <div className={styles.contact}>
-                <p className="flex items-center justify-center gap-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  {resumeData.email || "Your Email"}
-                </p>
-                <p className="flex items-center justify-center gap-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  {resumeData.phone || "Your Phone"}
-                </p>
+            ) : (
+              // Minimal template: centered layout
+              <div className="text-center">
+                <h1 className={styles.name}>
+                  {resumeData.name || "Your Name"}
+                </h1>
+                <div className={styles.contact}>
+                  <p className="flex items-center justify-center gap-2">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    {resumeData.email || "Your Email"}
+                  </p>
+                  <p className="flex items-center justify-center gap-2">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    {resumeData.phone || "Your Phone"}
+                  </p>
+                </div>
+                {resumeData.profilePicture && (
+                  <img
+                    src={resumeData.profilePicture}
+                    alt="Profile"
+                    className="w-24 h-24 rounded-full object-cover mx-auto mt-4 border-4 border-gray-100 shadow-lg"
+                  />
+                )}
               </div>
-            </div>
-          ) : (
-            // Minimal template: centered layout
-            <div className="text-center">
-              <h1 className={styles.name}>
-                {resumeData.name || "Your Name"}
-              </h1>
-              <div className={styles.contact}>
-                <p className="flex items-center justify-center gap-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  {resumeData.email || "Your Email"}
-                </p>
-                <p className="flex items-center justify-center gap-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  {resumeData.phone || "Your Phone"}
-                </p>
-              </div>
-              {resumeData.profilePicture && (
-                <img
-                  src={resumeData.profilePicture}
-                  alt="Profile"
-                  className="w-24 h-24 rounded-full object-cover mx-auto mt-4 border-4 border-gray-100 shadow-lg"
-                />
-              )}
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-        {/* Content sections */}
-        <div className="space-y-6">
-          <Section title="Education" content={resumeData.education} styles={styles} />
-          <Section title="Experience" content={resumeData.experience} styles={styles} />
-          <Section title="Skills" content={resumeData.skills} styles={styles} />
+          {/* Content sections */}
+          <div className="space-y-6">
+            <Section title="Education" content={resumeData.education} styles={styles} />
+            <Section title="Experience" content={resumeData.experience} styles={styles} />
+            <Section title="Skills" content={resumeData.skills} styles={styles} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
