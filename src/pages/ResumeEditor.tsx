@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import WYSIWYGEditor from '../components/WYSIWYGEditor';
-import { exportFormats, downloadFile } from '../utils/exportUtils';
 import { analyzeResume, ResumeScore } from '../utils/resumeAnalytics';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import PDFPreviewModal from '../components/PDFPreviewModal';
@@ -98,36 +97,6 @@ export default function ResumeEditor() {
     );
   };
 
-  const handleExport = (format: "json" | "txt") => {
-    // Convert HTML content to plain text for export
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = resumeContent;
-    const plainText = tempDiv.textContent || tempDiv.innerText || '';
-    
-    if (format === 'json') {
-      const data = { 
-        name: plainText.split('\n')[0] || '',
-        email: '',
-        phone: '',
-        education: plainText,
-        experience: plainText,
-        skills: plainText,
-        template: selectedTemplate 
-      };
-      const url = exportFormats[format](data);
-      downloadFile(url, `resume.${format}`);
-    } else {
-      const url = exportFormats[format]({ 
-        name: plainText.split('\n')[0] || '',
-        email: '',
-        phone: '',
-        education: plainText,
-        experience: plainText,
-        skills: plainText
-      });
-      downloadFile(url, `resume.${format}`);
-    }
-  };
 
   const [resumeScore, setResumeScore] = useState<ResumeScore | null>(null);
 
@@ -153,11 +122,6 @@ export default function ResumeEditor() {
       key: "s",
       ctrlKey: true,
       action: () => handleDownloadPDF(),
-    },
-    {
-      key: "e",
-      ctrlKey: true,
-      action: () => handleExport("json"),
     },
   ]);
 
@@ -208,9 +172,9 @@ export default function ResumeEditor() {
       {/* Main Content */}
       <div className="flex-1 w-full py-6">
         {(() => { console.log('📦 Main content container classes:', 'flex-1 w-full py-6'); return null; })()}
-        {/* Resume Score */}
-        {resumeScore && (
-          <div className="mb-6">
+        {/* Resume Insights */}
+        <div className="mb-6">
+          {resumeScore ? (
             <div className="bg-white rounded-lg p-4 shadow-lg border border-gray-100 mx-4 sm:mx-6 lg:mx-8">
               <div className="flex items-center gap-4">
                 <div className="flex-1">
@@ -237,8 +201,17 @@ export default function ResumeEditor() {
                 ))}
               </div>
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="bg-white rounded-lg p-4 shadow-lg border border-gray-100 mx-4 sm:mx-6 lg:mx-8">
+              <h3 className="text-lg font-semibold text-gray-800">
+                Resume insights coming soon
+              </h3>
+              <p className="mt-1 text-sm text-gray-600">
+                We&apos;re building AI-powered analysis to deliver tailored resume feedback for each role.
+              </p>
+            </div>
+          )}
+        </div>
 
         {/* Unified WYSIWYG Editor */}
         <div className="flex-1 mb-6">
@@ -250,21 +223,9 @@ export default function ResumeEditor() {
           />
         </div>
 
-        {/* Export Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 py-4 mx-4 sm:mx-6 lg:mx-8">
+        {/* Export Button */}
+        <div className="flex justify-center py-4 mx-4 sm:mx-6 lg:mx-8">
           {handleDownloadPDF()}
-          <button
-            onClick={() => handleExport("json")}
-            className="bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition"
-          >
-            Export JSON
-          </button>
-          <button
-            onClick={() => handleExport("txt")}
-            className="bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700 transition"
-          >
-            Export TXT
-          </button>
         </div>
       </div>
 
