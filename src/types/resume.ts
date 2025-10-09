@@ -22,4 +22,5 @@ export interface ResumeData {
   experience: string;
   skills: string;
   profilePicture?: string;
+  htmlContent?: string; // Full HTML content from the editor
 }

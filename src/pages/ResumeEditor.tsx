@@ -239,6 +239,7 @@ export default function ResumeEditor() {
           education: '',
           experience: '',
           skills: '',
+          htmlContent: resumeContent, // Pass the actual HTML content
         }}
       />
     </div>
