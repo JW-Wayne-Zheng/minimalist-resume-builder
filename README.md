@@ -1,48 +1,29 @@
 # Minimalist Resume Builder
 
-A modern, responsive web application for creating clean and professional resumes with real-time preview and export capabilities.
+A modern, responsive web application for building clean, professional résumés. Live preview and one-click export mean you see exactly what recruiters will get—no surprises, no formatting fights.
 
-Live Demo: [Link](https://minimalist-resume-builder-1ad73fbf31e4.herokuapp.com/)
+The tech world thrives on open source, and this project pays it forward: a React + TypeScript codebase spun up with Vite for lightning-fast builds and rock-solid type safety.
 
-> This project is actively under development with new features pending. If you would like to contribute, please feel free to contact us or raise an issue.
+For years, the default tools have been Microsoft Word or Google Docs. They work, but they’re cluttered: endless menus, hidden settings, and a decade-old template gallery that still thinks “Times New Roman” is a personality. LaTeX and Overleaf solve the aesthetics problem, yet they demand a foreign markup language most job-seekers have never met.
+
+This app bridges the gap: the polish of LaTeX, the ease of a modern form. No installs, no syntax, no Ctrl+Alt+‽ just to left-align a heading. Write once, export forever.
+
+Live Demo: ~~[Link](https://minimalist-resume-builder-1ad73fbf31e4.herokuapp.com/)~~ Change Upcoming
+
+> This project is actively under development, with several new features pending. Progress depends on how much free time I have after my full-time job and other commitments.
 
 ## Features
 
 - 🔄 Real-time preview as you type
 - 💾 Auto-saving to local storage
-- 📱 Responsive design
 - 📊 Resume content analysis with scoring
-- 🖼️ Profile picture upload with cropping
-- ⌨️ Keyboard shortcuts support
-- 📤 Multiple export formats:
-  - PDF download
-  - JSON export
-  - Plain text export
-
-## Tech Stack
-
-- React 19
-- TypeScript
-- Vite 6
-- TailwindCSS
-- React Image Crop
-- TipTap Rich Text Editor
+- 📤 Export to PDF format for professional usage
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js (latest LTS version)
-- npm or yarn
-
 ### Installation
 
-1. Clone the repository:
-
-```bash
-git clone https://github.com/yourusername/minimalist-resume-builder.git
-cd minimalist-resume-builder
-```
+1. Clone the repository
 
 2. Install dependencies:
 
